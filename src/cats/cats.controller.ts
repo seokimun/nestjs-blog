@@ -7,12 +7,12 @@ export class CatsController {
 
     @Get()
     getAllCat() {
-        return 'all cat';
+        return 'get all cat';
     }
 
     @Get(':id')
     getOneCat() {
-        return 'one cat';
+        return 'get one cat';
     }
 
     @Post()
