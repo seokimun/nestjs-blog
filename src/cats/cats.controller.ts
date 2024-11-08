@@ -1,7 +1,16 @@
-import { Controller, Delete, Get, Patch, Post, Put } from '@nestjs/common';
+import {
+    Controller,
+    Delete,
+    Get,
+    Patch,
+    Post,
+    Put,
+    UseInterceptors,
+} from '@nestjs/common';
 import { CatsService } from './cats.service';
-
+import { SuccessInterceptor } from '../common/interceptors/succeess.interceptro';
 @Controller('cats')
+@UseInterceptors(SuccessInterceptor)
 export class CatsController {
     constructor(private readonly catsService: CatsService) {}
 
