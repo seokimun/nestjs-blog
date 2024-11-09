@@ -4,9 +4,19 @@ import { AppService } from './app.service';
 import { CatsModule } from './cats/cats.module';
 import { UsersModule } from './users/users.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
+import { ConfigModule } from '@nestjs/config';
+import { getMysqlTypeOrmModule } from './getMysqlTypeOrmModule';
 
 @Module({
-    imports: [CatsModule, UsersModule],
+    imports: [
+        ConfigModule.forRoot({
+            isGlobal: true,
+            envFilePath: `.env`,
+        }),
+        getMysqlTypeOrmModule,
+        CatsModule,
+        UsersModule,
+    ],
     controllers: [AppController],
     providers: [AppService],
 })
