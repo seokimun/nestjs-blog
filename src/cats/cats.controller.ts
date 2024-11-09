@@ -1,16 +1,8 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Patch,
-    Post,
-    Put,
-    UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { SuccessInterceptor } from '../common/interceptors/succeess.interceptro';
 import { CreateCatDto } from './dto/CreateCat.dto';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)
 export class CatsController {
@@ -21,28 +13,35 @@ export class CatsController {
         return 'get all cat';
     }
 
-    @Get(':id')
-    getOneCat() {
-        return 'get one cat';
-    }
-
+    @ApiOperation({ summary: '회원가입' })
+    @ApiResponse({
+        status: 500,
+        description: 'Server Error...',
+    })
+    @ApiResponse({
+        status: 200,
+        description: '성공!',
+    })
     @Post()
     async signup(@Body() body: CreateCatDto) {
         return await this.catsService.signup(body);
     }
 
-    @Put()
-    updateCat() {
-        return 'update cat';
+    @ApiOperation({ summary: '로그인' })
+    @Post('login')
+    logIn() {
+        return 'login';
     }
 
-    @Patch()
-    updatePartialCat() {
-        return;
+    @ApiOperation({ summary: '로그아웃' })
+    @Post('logout')
+    logOut() {
+        return 'logout';
     }
 
-    @Delete(':id')
-    deleteCat() {
-        return 'delete cat';
+    @ApiOperation({ summary: '고양이 이미지 업로드' })
+    @Post('upload/cats')
+    uploadCatImg() {
+        return 'uploadImg';
     }
 }
