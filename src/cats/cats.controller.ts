@@ -1,4 +1,5 @@
 import {
+    Body,
     Controller,
     Delete,
     Get,
@@ -9,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { SuccessInterceptor } from '../common/interceptors/succeess.interceptro';
+import { CreateCatDto } from './dto/CreateCat.dto';
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)
 export class CatsController {
@@ -25,8 +27,8 @@ export class CatsController {
     }
 
     @Post()
-    createCat() {
-        return 'create cat';
+    async signup(@Body() body: CreateCatDto) {
+        return await this.catsService.signup(body);
     }
 
     @Put()
