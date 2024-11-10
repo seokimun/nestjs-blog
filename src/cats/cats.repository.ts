@@ -11,4 +11,9 @@ export class CatsRepository extends Repository<Cats> {
     ) {
         super(repository.target, repository.manager, repository.queryRunner);
     }
+
+    async findByEmail(email: string): Promise<Cats | null> {
+        const cat = await this.repository.findOne({ where: { email } });
+        return cat;
+    }
 }

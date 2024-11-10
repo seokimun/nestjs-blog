@@ -9,5 +9,6 @@ import { CatsRepository } from './cats.repository';
     imports: [TypeOrmModule.forFeature([Cats])],
     controllers: [CatsController],
     providers: [CatsService, CatsRepository],
+    exports: [CatsService, CatsRepository],
 })
 export class CatsModule {}
