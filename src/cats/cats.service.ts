@@ -7,11 +7,11 @@ import { CatsRepository } from './cats.repository';
 
 @Injectable()
 export class CatsService {
-    constructor(private readonly catRepository: CatsRepository) {}
+    constructor(private readonly catsRepository: CatsRepository) {}
 
     async signup(dto: CreateCatDto): Promise<Cats> {
         const { email, nickname, password } = dto;
-        const isEmailExsist = await this.catRepository.findOneBy({ email });
+        const isEmailExsist = await this.catsRepository.findOneBy({ email });
 
         if (isEmailExsist) {
             throw new UnauthorizedException(
@@ -21,11 +21,11 @@ export class CatsService {
 
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        const cat = this.catRepository.create({
+        const cat = this.catsRepository.create({
             email,
             nickname,
             password: hashedPassword,
         });
-        return plainToClass(Cats, await this.catRepository.save(cat));
+        return plainToClass(Cats, await this.catsRepository.save(cat));
     }
 }
