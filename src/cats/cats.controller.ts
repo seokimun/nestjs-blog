@@ -1,16 +1,29 @@
-import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    Post,
+    UseGuards,
+    UseInterceptors,
+} from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { SuccessInterceptor } from '../common/interceptors/succeess.interceptro';
 import { CreateCatDto } from './dto/CreateCat.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
+import { User } from '../common/decorators/user.decorator';
+import { classToPlain } from 'class-transformer';
+
 @Controller('cats')
 @UseInterceptors(SuccessInterceptor)
 export class CatsController {
     constructor(private readonly catsService: CatsService) {}
 
+    @ApiOperation({ summary: '현재 고양이 가져오기' })
+    @UseGuards(JwtAuthGuard)
     @Get()
-    getAllCat() {
-        return 'get all cat';
+    getAllCat(@User() user) {
+        return classToPlain(user);
     }
 
     @ApiOperation({ summary: '회원가입' })

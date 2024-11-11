@@ -33,7 +33,7 @@ export class AuthService {
             );
         }
 
-        const payload = { email: email, sub: user.id };
+        const payload = { id: user.id, email: email, nickname: user.nickname };
 
         return {
             token: this.jwtService.sign(payload),

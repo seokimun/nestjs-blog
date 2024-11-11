@@ -13,7 +13,7 @@ export class CatsRepository extends Repository<Cats> {
     }
 
     async findByEmail(email: string): Promise<Cats | null> {
-        const cat = await this.repository.findOne({ where: { email } });
-        return cat;
+        const user = await this.repository.findOne({ where: { email } });
+        return user;
     }
 }
