@@ -4,6 +4,7 @@ import { HttpExceptionFilter } from './common/exceptions/http-exception.filter';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as expressBasicAuth from 'express-basic-auth';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -18,6 +19,17 @@ async function bootstrap() {
         origin: true, //어떤 프론트사이트든 접근허용 //개발이 완료되면 false로 바꿔줄것
         credentials: true,
     });
+
+    app.use(
+        ['/docs', '/docs-json'],
+        expressBasicAuth({
+            challenge: true,
+            users: {
+                [env.get<string>('SWAGGER_USER')]:
+                    env.get<string>('SWAGGER_PASSWORD'),
+            },
+        }),
+    );
 
     const config = new DocumentBuilder()
         .setTitle('blog API')
