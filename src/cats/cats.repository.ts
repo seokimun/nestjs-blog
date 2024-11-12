@@ -16,4 +16,15 @@ export class CatsRepository extends Repository<Cats> {
         const user = await this.repository.findOne({ where: { email } });
         return user;
     }
+
+    async findByIdAndUpdateImg(id: number, fileName: string) {
+        const cat = await this.repository.findOneBy({ id });
+
+        cat.imgUrl = `http://localhost:8000/media/${fileName}`;
+
+        const newCat = await this.repository.save(cat);
+
+        console.log(newCat);
+        return newCat;
+    }
 }
