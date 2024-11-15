@@ -42,7 +42,9 @@ export class CatsService {
     }
 
     async getAllCat() {
-        const cat = await this.catsRepository.find();
+        const cat = await this.catsRepository.find({
+            relations: ['comments'],
+        });
         return plainToClass(Cats, cat);
     }
 }

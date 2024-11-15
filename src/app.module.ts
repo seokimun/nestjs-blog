@@ -7,6 +7,7 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { ConfigModule } from '@nestjs/config';
 import { getMysqlTypeOrmModule } from './getMysqlTypeOrmModule';
 import { AuthModule } from './auth/auth.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { AuthModule } from './auth/auth.module';
         CatsModule,
         UsersModule,
         AuthModule,
+        CommentsModule,
     ],
     controllers: [AppController],
     providers: [AppService],

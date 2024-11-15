@@ -1,7 +1,8 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { Exclude } from 'class-transformer';
+import { Comments } from './comments.entity';
 
 @Entity('cats')
 export class Cats extends BaseEntity {
@@ -22,7 +23,12 @@ export class Cats extends BaseEntity {
     password: string;
 
     @IsString()
-    @Exclude()
     @Column({ nullable: true })
     imgUrl: string;
+
+    @OneToMany(() => Comments, (comments) => comments.author)
+    comments: Comments[];
+
+    @OneToMany(() => Comments, (comments) => comments.info)
+    comment: Comments[];
 }
